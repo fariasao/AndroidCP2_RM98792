@@ -1,46 +1,53 @@
 package com.enzofarias.cp2_rm98792
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.enzofarias.cp2_rm98792.ui.theme.Cp2_rm98792Theme
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : ComponentActivity() {
+
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Cp2_rm98792Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+        setContentView(R.layout.activity_main)
+
+        val buttonCalculator = findViewById<Button>(R.id.buttonCalc)
+        val buttonAccountPhone = findViewById<Button>(R.id.buttonAccountPhone)
+        val buttonStudentSign = findViewById<Button>(R.id.buttonStudentSign)
+
+        // Definir ações ao tap
+        buttonCalculator.setOnClickListener {
+            val intent = Intent(this, CalculatorActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Definir ações ao tap
+        buttonAccountPhone.setOnClickListener {
+            val intent = Intent(this, PhoneActivity::class.java)
+            startActivity(intent)
+        }
+
+        // função de assinatura
+        buttonStudentSign.setOnClickListener {
+            showSignature()
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    // exibir a assinatura
+    private fun showSignature() {
+        val mySign = """
+            Nome: Enzo Farias
+            RM: 98792
+        """.trimIndent()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Cp2_rm98792Theme {
-        Greeting("Android")
+        AlertDialog.Builder(this)
+            .setTitle("Desenvolvido Por")
+            .setMessage(mySign)
+            .setPositiveButton("Ok") { dialog, which ->
+
+            }
+            .show()
     }
+
 }
